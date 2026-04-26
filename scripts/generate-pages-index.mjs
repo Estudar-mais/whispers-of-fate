@@ -46,6 +46,20 @@ const writeIndexHtml = async () => {
     const baseForHtml = ensureTrailingSlash(normalizedBase);
     const scriptSrc = `${baseForHtml}${trimLeadingSlash(appEntry)}`;
     const stylesheetHref = stylesheet ? `${baseForHtml}${trimLeadingSlash(stylesheet)}` : null;
+    const routerHydrationShim = `<script>
+window.$_TSR = window.$_TSR || {
+    initialized: true,
+    router: {
+        matches: [],
+        manifest: { routes: {} },
+        dehydratedData: null,
+        lastMatchId: null,
+    },
+    buffer: [],
+    t: new Map(),
+    h() {},
+};
+</script>`;
 
     const html = `<!doctype html>
 <html lang="pt-BR">
@@ -57,6 +71,7 @@ const writeIndexHtml = async () => {
   </head>
   <body>
     <div id="root"></div>
+        ${routerHydrationShim}
     <script type="module" src="${scriptSrc}"></script>
   </body>
 </html>
