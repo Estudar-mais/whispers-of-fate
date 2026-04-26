@@ -9,38 +9,134 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TiragemRouteImport } from './routes/tiragem'
+import { Route as SobreRouteImport } from './routes/sobre'
+import { Route as OraculoRouteImport } from './routes/oraculo'
+import { Route as BibliotecaRouteImport } from './routes/biblioteca'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as BibliotecaCartaRouteImport } from './routes/biblioteca.$carta'
 
+const TiragemRoute = TiragemRouteImport.update({
+  id: '/tiragem',
+  path: '/tiragem',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SobreRoute = SobreRouteImport.update({
+  id: '/sobre',
+  path: '/sobre',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OraculoRoute = OraculoRouteImport.update({
+  id: '/oraculo',
+  path: '/oraculo',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BibliotecaRoute = BibliotecaRouteImport.update({
+  id: '/biblioteca',
+  path: '/biblioteca',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BibliotecaCartaRoute = BibliotecaCartaRouteImport.update({
+  id: '/$carta',
+  path: '/$carta',
+  getParentRoute: () => BibliotecaRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/biblioteca': typeof BibliotecaRouteWithChildren
+  '/oraculo': typeof OraculoRoute
+  '/sobre': typeof SobreRoute
+  '/tiragem': typeof TiragemRoute
+  '/biblioteca/$carta': typeof BibliotecaCartaRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/biblioteca': typeof BibliotecaRouteWithChildren
+  '/oraculo': typeof OraculoRoute
+  '/sobre': typeof SobreRoute
+  '/tiragem': typeof TiragemRoute
+  '/biblioteca/$carta': typeof BibliotecaCartaRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/biblioteca': typeof BibliotecaRouteWithChildren
+  '/oraculo': typeof OraculoRoute
+  '/sobre': typeof SobreRoute
+  '/tiragem': typeof TiragemRoute
+  '/biblioteca/$carta': typeof BibliotecaCartaRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/biblioteca'
+    | '/oraculo'
+    | '/sobre'
+    | '/tiragem'
+    | '/biblioteca/$carta'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/biblioteca'
+    | '/oraculo'
+    | '/sobre'
+    | '/tiragem'
+    | '/biblioteca/$carta'
+  id:
+    | '__root__'
+    | '/'
+    | '/biblioteca'
+    | '/oraculo'
+    | '/sobre'
+    | '/tiragem'
+    | '/biblioteca/$carta'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  BibliotecaRoute: typeof BibliotecaRouteWithChildren
+  OraculoRoute: typeof OraculoRoute
+  SobreRoute: typeof SobreRoute
+  TiragemRoute: typeof TiragemRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/tiragem': {
+      id: '/tiragem'
+      path: '/tiragem'
+      fullPath: '/tiragem'
+      preLoaderRoute: typeof TiragemRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sobre': {
+      id: '/sobre'
+      path: '/sobre'
+      fullPath: '/sobre'
+      preLoaderRoute: typeof SobreRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/oraculo': {
+      id: '/oraculo'
+      path: '/oraculo'
+      fullPath: '/oraculo'
+      preLoaderRoute: typeof OraculoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/biblioteca': {
+      id: '/biblioteca'
+      path: '/biblioteca'
+      fullPath: '/biblioteca'
+      preLoaderRoute: typeof BibliotecaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,11 +144,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/biblioteca/$carta': {
+      id: '/biblioteca/$carta'
+      path: '/$carta'
+      fullPath: '/biblioteca/$carta'
+      preLoaderRoute: typeof BibliotecaCartaRouteImport
+      parentRoute: typeof BibliotecaRoute
+    }
   }
 }
 
+interface BibliotecaRouteChildren {
+  BibliotecaCartaRoute: typeof BibliotecaCartaRoute
+}
+
+const BibliotecaRouteChildren: BibliotecaRouteChildren = {
+  BibliotecaCartaRoute: BibliotecaCartaRoute,
+}
+
+const BibliotecaRouteWithChildren = BibliotecaRoute._addFileChildren(
+  BibliotecaRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  BibliotecaRoute: BibliotecaRouteWithChildren,
+  OraculoRoute: OraculoRoute,
+  SobreRoute: SobreRoute,
+  TiragemRoute: TiragemRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
