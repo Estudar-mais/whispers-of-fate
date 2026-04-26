@@ -1,6 +1,6 @@
-import { createFileRoute } from "@tanstack/react-router";
-import heroBg from "@/assets/hero-bg.jpg";
-import { MysticParticles } from "@/components/MysticParticles";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { CosmicBackdrop } from "@/components/CosmicBackdrop";
+import { SiteHeader } from "@/components/SiteHeader";
 import { DailyCard } from "@/components/DailyCard";
 import { drawDailyCard } from "@/utils/oracle.functions";
 
