@@ -1,12 +1,14 @@
 import { Link } from "@tanstack/react-router";
 
-const NAV = [
+type NavItem = { to: "/" | "/tiragem" | "/oraculo" | "/biblioteca" | "/sobre"; label: string; exact?: boolean };
+
+const NAV: NavItem[] = [
   { to: "/", label: "Carta do Dia", exact: true },
   { to: "/tiragem", label: "Tiragem" },
   { to: "/oraculo", label: "Oráculo" },
   { to: "/biblioteca", label: "Biblioteca" },
   { to: "/sobre", label: "Sobre" },
-] as const;
+];
 
 export function SiteHeader() {
   return (
