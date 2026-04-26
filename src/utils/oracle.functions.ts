@@ -1,4 +1,4 @@
-import { createServerFn } from "@tanstack/react-start";
+// Removed createServerFn import
 
 const MAJOR_ARCANA = [
   { name: "O Louco", keywords: "início, liberdade, salto no desconhecido" },
@@ -37,9 +37,10 @@ function pickDailyCard() {
   return MAJOR_ARCANA[idx];
 }
 
-export const drawDailyCard = createServerFn({ method: "GET" }).handler(async () => {
+export const drawDailyCard = async () => {
   const card = pickDailyCard();
-  const apiKey = process.env.LOVABLE_API_KEY;
+  // Using import.meta.env for Vite compatibility on the client
+  const apiKey = import.meta.env?.VITE_LOVABLE_API_KEY;
 
   const fallback = `Hoje, ${card.name} se ergue do véu. ${card.keywords}. Permita que o que se move em silêncio dentro de você encontre a luz.`;
 
@@ -82,4 +83,4 @@ export const drawDailyCard = createServerFn({ method: "GET" }).handler(async () 
     console.error("drawDailyCard error:", err);
     return { card: card.name, keywords: card.keywords, message: fallback };
   }
-});
+};
