@@ -29,49 +29,9 @@ function Index() {
   const data = Route.useLoaderData();
 
   return (
-    <main className="relative min-h-screen overflow-hidden bg-background text-foreground">
-      {/* Fundo cósmico */}
-      <div className="pointer-events-none fixed inset-0 -z-10">
-        <img
-          src={heroBg}
-          alt=""
-          aria-hidden="true"
-          className="h-full w-full object-cover opacity-40"
-          width={1920}
-          height={1280}
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-background/70 to-background" />
-        <div className="absolute inset-0 bg-arcane-radial opacity-60" />
-      </div>
-
-      {/* Partículas */}
-      <div className="fixed inset-0 -z-10">
-        <MysticParticles count={70} />
-      </div>
-
-      {/* Header / marca */}
-      <header className="relative z-10 flex items-center justify-between px-6 py-8 md:px-14">
-        <div className="flex items-center gap-3">
-          <div className="relative h-9 w-9">
-            <div className="absolute inset-0 rounded-full border border-gold/50 animate-orbit-slow">
-              <div className="absolute -top-0.5 left-1/2 h-1.5 w-1.5 -translate-x-1/2 rounded-full bg-gold shadow-[0_0_10px_var(--gold)]" />
-            </div>
-            <div className="absolute inset-2 rounded-full bg-arcane/30 blur-sm" />
-            <div className="absolute inset-[14px] rounded-full bg-gold/80" />
-          </div>
-          <div className="leading-tight">
-            <div className="font-serif italic text-lg text-foreground">Portal Arcano</div>
-            <div className="font-sans text-[10px] tracking-ritual uppercase text-gold/60">
-              véu · oráculo · destino
-            </div>
-          </div>
-        </div>
-        <nav className="hidden items-center gap-8 font-sans text-xs tracking-arcane uppercase text-muted-foreground md:flex">
-          <span className="cursor-default opacity-80">Carta do Dia</span>
-          <span className="cursor-not-allowed opacity-40">Tiragem · em breve</span>
-          <span className="cursor-not-allowed opacity-40">Oráculo · em breve</span>
-        </nav>
-      </header>
+    <main className="relative min-h-screen text-foreground">
+      <CosmicBackdrop />
+      <SiteHeader />
 
       {/* Hero */}
       <section className="relative z-10 mx-auto flex max-w-5xl flex-col items-center px-6 pt-12 text-center md:pt-20">
@@ -103,8 +63,8 @@ function Index() {
         <DailyCard card={data.card} keywords={data.keywords} message={data.message} />
       </section>
 
-      {/* Whisper / rodapé poético */}
-      <section className="relative z-10 mx-auto max-w-3xl px-6 pb-32 text-center">
+      {/* Whisper / rodapé poético + CTAs */}
+      <section className="relative z-10 mx-auto max-w-3xl px-6 pb-24 text-center">
         <div className="mx-auto mb-8 h-px w-24 bg-gradient-to-r from-transparent via-gold/60 to-transparent" />
         <p className="font-serif text-xl italic leading-relaxed text-muted-foreground md:text-2xl">
           "Aquilo que você busca já está se aproximando —
@@ -114,6 +74,27 @@ function Index() {
         <p className="mt-6 font-sans text-[10px] tracking-ritual uppercase text-gold/50">
           — sussurros do portal
         </p>
+
+        <div className="mt-12 flex flex-wrap items-center justify-center gap-4">
+          <Link
+            to="/oraculo"
+            className="rounded-sm border border-gold/60 bg-gold/10 px-6 py-3 font-sans text-[11px] tracking-ritual uppercase text-gold transition-all hover:bg-gold/20 hover:shadow-[0_0_30px_-5px_var(--gold)]"
+          >
+            consultar o oráculo
+          </Link>
+          <Link
+            to="/tiragem"
+            className="rounded-sm border border-border px-6 py-3 font-sans text-[11px] tracking-ritual uppercase text-muted-foreground transition-all hover:border-gold/50 hover:text-foreground"
+          >
+            fazer uma tiragem
+          </Link>
+          <Link
+            to="/biblioteca"
+            className="rounded-sm border border-border px-6 py-3 font-sans text-[11px] tracking-ritual uppercase text-muted-foreground transition-all hover:border-gold/50 hover:text-foreground"
+          >
+            biblioteca arcana
+          </Link>
+        </div>
       </section>
 
       <footer className="relative z-10 border-t border-border/40 px-6 py-8 text-center">
